@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% include 'navbar.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 mt-5">
+            <div class="card">
+                <h2 class="text-center">User Update Form</h2>
+                <form method="post" class="font-weight-bold">
+                    <div class="form-group">
+                        <label for="fname">First Name</label>
+                        <input type="text" value="{{current_user.first_name}}" class="form-control" name="fname" placeholder="Enter First Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="lname">Last Name</label>
+                        <input type="text" value="{{current_user.last_name}}" class="form-control" name="lname" placeholder="Enter Last Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName">Role</label>
+                        <select name="role" id="role" class="form-control" required>
+                            <option value="{{current_user.role}}">{{current_user.role}}</option>
+                            <option value="Member">Member</option>
+                            <option value="Trainer">Trainer</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" value="{{current_user.email}}" class="form-control" name="email" placeholder="Enter Email">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-info btn-custom btn-block mt-4">Update User</button>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{url_for('user_bp.user_profile')}}" class="btn btn-warning btn-custom btn-block mt-4">Cancel</a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+
+    </div>
+</div>
+{% endblock content %}

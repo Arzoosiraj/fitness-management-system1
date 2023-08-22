@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% include 'navbar.html' %}
+{% block content %}
+<div class="container">
+    <h1>All members page</h1>
+    {% if all_members %}
+    <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Sr</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for member in all_members %}
+          <tr>
+            <td>{{loop.index}}</td>
+            <td>{{ member.first_name }}</td>
+            <td>{{ member.last_name }}</td>
+            <td>{{ member.email }}</td>
+            <td><a href="#"
+                class="btn btn-info btn-sm">Edit</a></td>
+            <td>
+                <a href="#"
+                class="btn btn-danger btn-sm">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="text-center">
+        <span class="emoji">&#x1F614;</span>
+        <p class="text-danger h3">No Member is Found</p>
+      </div>
+    {% endif %}
+    <div class="text-center mt-4">
+        <a href="{{ url_for('user_bp.admin_dashboard') }}" class="btn btn-info btn-custom">Back to Dashboard</a>
+    </div>
+    
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% include 'navbar.html' %}
+{% block content %}
+<div class="container">
+    <h2>Welcome to Admin Dashboard</h2>
+    <!-- Add your member-specific features here -->
+    <div class="row mt-5">
+        <div class="col-md-6"><a href="{{url_for('user_bp.all_members')}}" class="btn btn-info btn-custom">See All Members</a></div>
+        <div class="col-md-6"><a href="{{url_for('user_bp.all_trainers')}}" class="btn btn-info btn-custom"> See All Trainers</a></div>
+    </div>
+</div>
+{% endblock%}

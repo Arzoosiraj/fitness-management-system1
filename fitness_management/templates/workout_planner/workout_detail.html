@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+{% include 'navbar.html' %}
+{% block content %}
+<div class="container">
+    <h2 class="text-center">{{ workout.title }}</h2>
+    {% include '_messages.html' %}
+<div class="row mt-5">
+    <div class="col-md-8">
+
+        {% if workout.exercises %}
+        <table class="modern-table">
+            <thead>
+              <tr>
+                <th>Sr</th>
+                <th>Exercise Name</th>
+                <th>Sets</th>
+                <th>Reps</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for exercise in workout.exercises %}
+              <tr>
+                <td>{{loop.index}}</td>
+                <td>{{ exercise.name }}</td>
+                <td>{{ exercise.sets }}</td>
+                <td>{{ exercise.reps }}</td>
+                <td><a href="{{ url_for('workout_bp.updateexercise', exercise_id=exercise.id, workout_id=workout.id) }}"
+                  class="btn btn-info btn-sm">Edit</a></td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                  data-target="#exampleModalLong-{{exercise.id}}">
+                  Delete
+                </button>
+                </td>
+              </tr>
+                          <!-- Modal -->
+            <div class="modal fade" id="exampleModalLong-{{exercise.id}}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{exercise.name}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span class="text-danger ">Are you sure to delete {{exercise.name}}</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">Cancel</button>
+                    <form action="{{url_for('workout_bp.delete_exercise',exercise_id = exercise.id, workout_id = workout.id)}}" method="post">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+            </div>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <div class="text-center">
+            <span class="emoji">&#x1F614;</span>
+            <p class="text-danger h3">No Exercise is Found</p>
+          </div>
+        {% endif %}
+    </div>
+    <div class="col-md-4">
+        <h3>Add New Exercise</h3>
+            <div class="card">
+                <h2 class="text-center">Create New Exercise</h2>
+                <form method="post">
+                    <div class="form-group">
+                        <label for="workout">Exercise Name</label>
+                        <input type="text" class="form-control" name="name" placeholder="Enter Exercise Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="workout">Sets</label>
+                        <input type="number" class="form-control" name="sets" placeholder="Enter Number OF Sets">
+                    </div>
+                    <div class="form-group">
+                        <label for="workout">Reps</label>
+                        <input type="number" class="form-control" name="reps" placeholder="Enter Number OF Reps">
+                    </div>
+                    <button type="submit" class="btn btn-info btn-custom btn-block mt-4">Add Exercise </button>
+                </form>
+                <div class="mt-3">
+                    {% if current_user.role == "Admin" %}
+                        <a href="{{ url_for('user_bp.admin_dashboard') }}">Back to Dashboard</a>
+                        {% elif current_user.role == "Trainer" %}
+                        <a href="{{ url_for('user_bp.trainer_dashboard') }}">Back to Dashboard</a>
+                        {% else %}
+                        <a href="{{ url_for('user_bp.member_dashboard') }}">Back to Dashboard</a>
+                    {% endif %}
+                </div>
+            </div>
+    </div>
+</div>
+</div>
+{% endblock %}

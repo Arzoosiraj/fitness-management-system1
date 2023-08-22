@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% include 'navbar.html' %}
+{% block content %}
+<div class="container mt-5">
+<div class="row">
+    <div class="col-md-12">
+        {% include '_messages.html' %}
+        <div class="card">
+            <h1>This is user profile page</h1>
+            <h5>First Name : {{current_user['first_name']}}</h5>
+            <h5>Last Name : {{current_user['last_name']}}</h5>
+            <h5>Email : {{current_user['email']}}</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{ url_for('user_bp.user_update') }}" class="btn btn-info btn-custom btn-block">Update User</a>            
+                </div>
+                <div class="col-md-6">
+                    {% if current_user.role == "Admin" %}
+                    <a href="{{ url_for('user_bp.admin_dashboard') }}" class="btn btn-warning btn-custom btn-block">Cancel</a>
+                    {% elif current_user.role == "Trainer" %}
+                    <a href="{{ url_for('user_bp.trainer_dashboard') }}" class="btn btn-warning btn-custom btn-block">Cancel</a>
+                    {% else %}
+                    <a href="{{ url_for('user_bp.member_dashboard') }}" class="btn btn-warning btn-custom btn-block">Cancel</a>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+{% endblock %}
